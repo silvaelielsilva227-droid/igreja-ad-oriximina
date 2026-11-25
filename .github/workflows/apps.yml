@@ -64,7 +64,12 @@ jobs:
         working-directory: mobile/android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          # O repositório Maven às vezes limita downloads (erro 429): tenta até 4 vezes
+          for t in 1 2 3 4; do
+            ./gradlew assembleDebug --no-daemon && exit 0
+            echo "Tentativa $t falhou; aguardando para tentar de novo..."; sleep $((t * 60))
+          done
+          exit 1
       - name: Renomear
         run: cp mobile/android/app/build/outputs/apk/debug/app-debug.apk AD-Oriximina.apk
       - uses: actions/upload-artifact@v4
