@@ -1,0 +1,14 @@
+{
+  "appId": "br.org.adoriximina.gestao",
+  "appName": "AD Oriximiná",
+  "webDir": "www",
+  "backgroundColor": "#060914",
+  "server": {
+    "url": "https://silvaelielsilva227-droid.github.io/igreja-ad-oriximina/",
+    "androidScheme": "https",
+    "errorPath": "index.html"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

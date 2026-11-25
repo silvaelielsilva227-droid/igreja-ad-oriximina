@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#060914">
+  <title>AD Extensão de Oriximiná · Gestão</title>
+  <meta name="description" content="Sistema de gestão da Igreja Assembleia de Deus – Extensão de Oriximiná (Curuá – PA): dízimos, ofertas, cultos, eventos e membros.">
+  <link rel="icon" href="img/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="AD Oriximiná">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3.0">
+</head>
+<body>
+  <!-- Fundo animado -->
+  <div class="bg-fx" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <!-- Tela de login / primeiro acesso -->
+  <div id="auth" class="auth" hidden></div>
+
+  <!-- Aplicação -->
+  <div id="app" class="app" hidden>
+    <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+      <div class="sb-head">
+        <a href="#painel" class="brand">
+          <span class="brand-mark"><img src="img/emblema.png" alt=""></span>
+          <span class="brand-txt"><b>Assembleia de Deus</b><small>Ext. de Oriximiná</small></span>
+        </a>
+        <button class="sb-toggle" id="sbToggle" data-act="sidebarMini" aria-label="Recolher ou expandir o menu" data-tip="Recolher / expandir menu" data-ic="chevrons"></button>
+      </div>
+      <nav class="nav" id="nav"></nav>
+      <div id="sbNext"></div>
+      <div class="sb-user" id="sbUser"></div>
+    </aside>
+    <div class="backdrop" id="backdrop"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn" data-act="menu" aria-label="Mostrar ou esconder o menu" data-tip="Mostrar / esconder menu" data-ic="sidebar"></button>
+        <div class="tb-title"><h1 id="pageTitle">Painel</h1><small id="pageSub"></small></div>
+        <button class="search-btn" data-act="abrirPaleta" aria-label="Buscar (Ctrl+K)"><span data-ic="search"></span><span class="sb-lbl">Buscar membros, cultos, ações…</span><kbd>Ctrl K</kbd></button>
+        <button class="icon-btn" id="themeBtn" data-act="tema" aria-label="Alternar tema claro/escuro" data-tip="Tema claro / escuro"></button>
+        <button class="icon-btn" id="bellBtn" data-act="sino" aria-label="Notificações" data-tip="Notificações"><span data-ic="bell"></span><span class="badge" id="bellBadge" hidden></span></button>
+        <span id="topAdd"></span>
+      </header>
+      <section id="view" class="view"></section>
+    </main>
+  </div>
+
+  <!-- Painel de notificações -->
+  <div id="notifPanel" class="pop" hidden role="dialog" aria-label="Notificações"></div>
+
+  <!-- Modal genérico -->
+  <dialog id="modal">
+    <form method="dialog" class="modal-card" id="modalForm" novalidate>
+      <header class="modal-head">
+        <h2 id="modalTitle"></h2>
+        <button type="button" class="icon-btn sm" data-close aria-label="Fechar" data-ic="x"></button>
+      </header>
+      <div class="modal-body" id="modalBody"></div>
+      <footer class="modal-foot" id="modalFoot"></footer>
+    </form>
+  </dialog>
+
+  <!-- Busca rápida (Ctrl+K) -->
+  <dialog id="paleta" aria-label="Busca rápida">
+    <div class="pal-in"><span data-ic="search"></span><input id="palInput" type="text" placeholder="Digite para buscar páginas, membros, cultos, eventos ou ações…" autocomplete="off"><kbd>Esc</kbd></div>
+    <div class="pal-list" id="palList"></div>
+    <div class="pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navegar</span><span><kbd>Enter</kbd> abrir</span><span><kbd>Ctrl</kbd><kbd>K</kbd> abrir busca</span></div>
+  </dialog>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+  <div class="tip" id="tip" role="tooltip"></div>
+
+  <script type="module" src="js/app.js?v=3.0"></script>
+</body>
+</html>

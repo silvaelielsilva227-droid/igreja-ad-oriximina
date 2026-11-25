@@ -1,0 +1,9 @@
+# Ferramentas locais
+.claude/
+node_modules/
+desktop/node_modules/
+desktop/dist/
+mobile/node_modules/
+mobile/android/
+# Regras do Firebase ficam só no computador (contêm o e-mail do administrador geral)
+firestore.rules
