@@ -87,9 +87,12 @@ jobs:
         run: |
           chmod +x gradlew
           for t in 1 2 3; do
-            ./gradlew assembleDebug --no-daemon && exit 0
+            ./gradlew assembleDebug --no-daemon > build.log 2>&1 && { tail -5 build.log; exit 0; }
+            tail -80 build.log
             echo "Tentativa $t falhou; aguardando para tentar de novo..."; sleep 45
           done
+          # Mostra o motivo do erro como aviso (visível na página do workflow)
+          grep -A9 "What went wrong" build.log | head -10 | sed 's/^/::error::/' || true
           exit 1
       - name: Renomear
         run: cp mobile/android/app/build/outputs/apk/debug/app-debug.apk AD-Oriximina.apk
