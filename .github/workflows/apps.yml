@@ -56,7 +56,13 @@ jobs:
           mkdir -p assets
           cp ../img/icons/icon-1024.png assets/icon-only.png
           cp ../img/icons/icon-1024.png assets/icon-foreground.png
-          npx @capacitor/assets generate --android --iconBackgroundColor '#4c1d95' --iconBackgroundColorDark '#4c1d95' || echo "Usando ícone padrão"
+          cp ../img/icons/icon-bg-1024.png assets/icon-background.png
+          npx @capacitor/assets generate --android || echo "Usando ícone padrão"
+          RES=android/app/src/main/res
+          if grep -qs "mipmap/ic_launcher_background" $RES/mipmap-anydpi-v26/*.xml && ! ls $RES/mipmap-*/ic_launcher_background.* >/dev/null 2>&1; then
+            echo "Fundo do ícone ausente: usando ícone simples"; rm -f $RES/mipmap-anydpi-v26/ic_launcher*.xml
+          fi
+          ls $RES/mipmap-mdpi/ || true
       - name: Sincronizar
         working-directory: mobile
         run: npx cap sync android
