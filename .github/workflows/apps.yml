@@ -60,14 +60,35 @@ jobs:
       - name: Sincronizar
         working-directory: mobile
         run: npx cap sync android
+      - name: Usar espelho do Google para o Maven Central (evita erro 429)
+        run: |
+          mkdir -p ~/.gradle/init.d
+          cat > ~/.gradle/init.d/espelho.gradle <<'FIM'
+          def espelho = 'https://maven-central.storage-download.googleapis.com/maven2/'
+          def trocar = { repos ->
+            repos.all { r ->
+              if (r instanceof MavenArtifactRepository && r.url.toString().contains('repo.maven.apache.org')) {
+                r.url = espelho
+              }
+            }
+          }
+          settingsEvaluated { s ->
+            trocar(s.pluginManagement.repositories)
+            trocar(s.dependencyResolutionManagement.repositories)
+          }
+          allprojects { p ->
+            trocar(p.buildscript.repositories)
+            trocar(p.repositories)
+          }
+          FIM
+          cat ~/.gradle/init.d/espelho.gradle
       - name: Compilar APK
         working-directory: mobile/android
         run: |
           chmod +x gradlew
-          # O repositório Maven às vezes limita downloads (erro 429): tenta até 4 vezes
-          for t in 1 2 3 4; do
+          for t in 1 2 3; do
             ./gradlew assembleDebug --no-daemon && exit 0
-            echo "Tentativa $t falhou; aguardando para tentar de novo..."; sleep $((t * 60))
+            echo "Tentativa $t falhou; aguardando para tentar de novo..."; sleep 45
           done
           exit 1
       - name: Renomear
